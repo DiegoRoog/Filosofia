@@ -1,0 +1,59 @@
+name: Publish Filosofia to GitHub Pages
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  build:
+    if: github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      pages: read
+    steps:
+      - uses: actions/checkout@v7.0.1
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@v7.1.0
+        with:
+          node-version: '24'
+          cache: npm
+      - uses: actions/configure-pages@v6.0.0
+      - name: Install dependencies
+        run: npm ci
+      - name: Test frame sequences and geometry
+        run: npm test
+      - name: Export static site
+        run: npm run build
+        env:
+          NEXT_PUBLIC_BASE_PATH: /Filosofia
+      - name: Check TypeScript
+        run: npm run typecheck
+      - name: Validate exported assets
+        run: node scripts/check-export.mjs /Filosofia
+      - uses: actions/upload-pages-artifact@v5.0.0
+        with:
+          path: out
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    permissions:
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v5.0.1
