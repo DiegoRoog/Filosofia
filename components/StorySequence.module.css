@@ -42,7 +42,7 @@
 }
 
 @media (min-width: 900px) and (max-aspect-ratio: 1 / 1) and (prefers-reduced-motion: no-preference) {
-  .head:not(.reduced) .block {
+  .head:not(.reduced) .block, .crown:not(.reduced) .block {
     width: min(84vw, 520px);
     max-width: 520px;
     margin-inline: auto;
@@ -50,6 +50,6 @@
     text-align: center;
     background: linear-gradient(180deg, transparent, #050506e0 25%, #050506e0 85%, transparent);
   }
-  .head .label span { margin-inline: auto; }
-  .head .block > p { margin-inline: auto; }
+  .head .label span, .crown .label span, .crown .signature::before { margin-inline: auto; }
+  .head .block > p, .crown .block > p { margin-inline: auto; }
 }
