@@ -45,3 +45,63 @@
   .title { font-size: clamp(3rem, 13.3vw, 6rem); }
   .quote { width: 84vw; }
 }
+
+@media (max-width: 899px) {
+  .stage {
+    display: grid;
+    grid-template-rows: auto auto 1fr auto auto 1fr auto;
+    gap: 12px;
+    padding: 8svh 8vw 4svh;
+  }
+  .label, .titlePosition, .quote, .scroll {
+    position: relative;
+    inset: auto;
+    width: 100%;
+  }
+  .label { grid-row: 1; }
+  .titlePosition {
+    grid-row: 2;
+    width: calc(100% + 16vw);
+    margin-inline: -8vw;
+  }
+  .left { grid-row: 4; }
+  .right { grid-row: 5; }
+  .quote { align-self: center; }
+  .quote blockquote { margin: 10px 0; }
+  .quote figcaption {
+    font-size: .6875rem;
+    letter-spacing: .16em;
+  }
+  .scroll {
+    grid-row: 7;
+    transform: none;
+    font-size: .75rem;
+    gap: 10px;
+  }
+  .scroll span { height: clamp(20px, 5svh, 48px); }
+}
+
+@media (max-width: 899px) and (orientation: landscape) {
+  .stage {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-template-rows: auto auto 1fr auto;
+    gap: 8px 24px;
+    padding: 4svh 7vw 3svh;
+  }
+  .label, .titlePosition, .scroll { grid-column: 1 / -1; }
+  .title { font-size: clamp(2.5rem, 10vw, 4.5rem); }
+  .titlePosition { width: calc(100% + 14vw); margin-inline: -7vw; }
+  .left { grid-area: 3 / 1; }
+  .right { grid-area: 3 / 2; }
+  .quote blockquote {
+    font-size: clamp(1.125rem, 5svh, 1.5rem);
+    margin: 6px 0;
+  }
+  .quote .rule { display: none; }
+  .scroll {
+    grid-row: 4;
+    flex-direction: row;
+    justify-content: center;
+  }
+  .scroll span { width: 32px; height: 1px; }
+}
